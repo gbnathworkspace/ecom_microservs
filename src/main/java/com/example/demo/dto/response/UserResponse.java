@@ -3,10 +3,12 @@ package com.example.demo.dto.response;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.UUID;
 
 @Data
 public class UserResponse {
-    private Long id;
+    private UUID id;
     private String firstName;
     private String lastName;
     private String email;

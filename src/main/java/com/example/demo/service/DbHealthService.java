@@ -16,8 +16,12 @@ import java.sql.ResultSet;
 public class DbHealthService {
     private static final Logger logger = LoggerFactory.getLogger(DbHealthService.class);
 
-    @Autowired
-    private DataSource dataSource;
+    final public DataSource dataSource;
+
+    DbHealthService(DataSource dataSrc)
+    {
+        dataSource = dataSrc;
+    }
 
     public boolean isDatabaseHealthy() {
         try (Connection connection = dataSource.getConnection()) {

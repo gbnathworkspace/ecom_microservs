@@ -1,17 +1,17 @@
 package com.example.demo.controller;
 
 import com.example.demo.service.DbHealthService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HealthController {
 
+    private final DbHealthService databaseHealthService;
 
-    @Autowired
-    private DbHealthService databaseHealthService;
+    public HealthController(DbHealthService databaseHealthService) {
+        this.databaseHealthService = databaseHealthService;
+    }
 
     @GetMapping("/dbhealth")
     public String checkHealth() {
