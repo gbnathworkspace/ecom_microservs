@@ -9,10 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HealthController {
 
+
     @Autowired
     private DbHealthService databaseHealthService;
 
-    @GetMapping("/health")
+    @GetMapping("/dbhealth")
     public String checkHealth() {
         boolean isHealthy = databaseHealthService.isDatabaseHealthy();
         if (isHealthy) {
@@ -21,5 +22,4 @@ public class HealthController {
             return "❌ PostgreSQL Database is DOWN!";
         }
     }
-
 }
