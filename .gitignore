@@ -31,3 +31,32 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### OS ###
+.DS_Store
+Thumbs.db
+
+### Database ###
+*.db
+*.sqlite
+
+### Logs ###
+*.log
+logs/
+
+### Environment Variables ###
+.env
+.env.local
+.env.production
+
+### Docker ###
+.dockerignore
+
+### Maven ###
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.properties
+
+### Application Specific ###
+application-local.properties
+application-dev.properties
+application-prod.properties

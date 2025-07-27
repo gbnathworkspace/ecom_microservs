@@ -2,7 +2,6 @@ package com.example.demo.filter;
 
 import com.example.demo.Utils.JWTUtil;
 import io.jsonwebtoken.Claims;
-import java.io.IOException;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -44,7 +43,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
              if(claims != null)
              {
-                 String userId = claims.get("userId").toString();
                  String emailId = claims.get("email").toString();
 
                  UsernamePasswordAuthenticationToken authentication =
