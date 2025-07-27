@@ -4,17 +4,19 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
-
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.security.Key;
 import java.util.*;
 
+@Component
 public class JWTUtil {
     private final Key key;
     public long EXPIRATION_TIME = 1000 * 60 * 60;
 
 
-    public JWTUtil(String secret)
+    public JWTUtil(@Value("${jwt.secret:myDefaultSecretKey}")String secret)
     {
             this.key = Keys.hmacShaKeyFor(secret.getBytes());
     }
@@ -36,7 +38,7 @@ public class JWTUtil {
             return Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
-                    .parseClaimsJwt(token)
+                    .parseClaimsJws(token)
                     .getBody();
         }
         catch (JwtException jex)

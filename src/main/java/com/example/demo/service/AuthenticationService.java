@@ -82,7 +82,14 @@ public class AuthenticationService {
         newUser.setPassword(passwordEncoder.encode(password));
         newUser.setCreatedAt(LocalDateTime.now());
 
-        userRepository.save(newUser);
+        try {
+            userRepository.save(newUser);
+            System.out.println("User saved successfully with ID: " + newUser.getUserId());
+        } catch (Exception e) {
+            System.out.println("Database error: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        }
 
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", newUser.getUserId());

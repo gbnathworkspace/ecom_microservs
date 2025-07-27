@@ -27,5 +27,11 @@ public class AuthController {
     {
         return authenticationService.register(registerRequest);
     }
+    
+    @GetMapping("/test")
+    public String test() {
+        System.out.println("Test endpoint reached!");
+        return "Auth endpoint working!";
+    }
 
 }
