@@ -117,8 +117,8 @@ public class AuthenticationServiceTest {
         });
 
         verify(userRepository).findByEmail("test@example.com");
-        verify(passwordEncoder, never()).matches(anyString(), anyString());
-        verify(jwtUtil).generateToken(anyMap());
+        verifyNoInteractions(passwordEncoder);
+        verifyNoInteractions(jwtUtil);
     }
 
     @Test
@@ -132,26 +132,32 @@ public class AuthenticationServiceTest {
 
         verify(userRepository).findByEmail("test@example.com");
         verify(passwordEncoder).matches("password123", "encodedPassword");
-        verify(jwtUtil).generateToken(anyMap());
+        verifyNoInteractions(jwtUtil);
     }
 
     @Test
     void testLogin_NullEmail() {
         loginRequest.setEmail(null);
 
-        assertThrows(UserNotFoundException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             authenticationService.login(loginRequest);
         });
+
+        verifyNoInteractions(userRepository);
+        verifyNoInteractions(passwordEncoder);
+        verifyNoInteractions(jwtUtil);
     }
 
     @Test
     void testLogin_EmptyPassword() {
         loginRequest.setPassword("");
-        when(userRepository.findByEmail(anyString())).thenReturn(Optional.of(user));
-        when(passwordEncoder.matches(anyString(), anyString())).thenReturn(false);
 
-        assertThrows(InvalidCredentialsException.class, () -> {
+        assertThrows(IllegalArgumentException.class, () -> {
             authenticationService.login(loginRequest);
         });
+
+        verifyNoInteractions(userRepository);
+        verifyNoInteractions(passwordEncoder);
+        verifyNoInteractions(jwtUtil);
     }
 }
