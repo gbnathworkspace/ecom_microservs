@@ -28,7 +28,6 @@ public class UserRepositoryTest {
     void testFindByEmail_UserExists()
     {
         User user = new User();
-        user.setUserId(UUID.randomUUID());
         user.setEmail("test@example.com");
         user.setPassword("test@123");
         user.setCreatedAt(LocalDateTime.now());
