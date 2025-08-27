@@ -111,7 +111,26 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     
-    - name: Deploy to AWS ECS
+    - name: Deploy to EC2
       run: |
-        echo "Deploying to AWS ECS..."
-        # AWS deployment commands will be added here
+        echo "${{ secrets.EC2_SSH_KEY }}" > private_key
+        chmod 600 private_key
+        ssh -o StrictHostKeyChecking=no -i private_key ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} '
+          # Pull latest image
+          docker pull ${{ secrets.DOCKER_USERNAME }}/ecom-microservices:latest
+          
+          # Stop and remove old container
+          docker stop ecom-app || true
+          docker rm ecom-app || true
+          
+          # Run new container
+          docker run -d --name ecom-app -p 8080:8080 \
+            -e SPRING_DATASOURCE_URL="${{ secrets.NEON_DB_URL }}" \
+            -e SPRING_DATASOURCE_USERNAME="${{ secrets.NEON_DB_USER }}" \
+            -e SPRING_DATASOURCE_PASSWORD="${{ secrets.NEON_DB_PASSWORD }}" \
+            ${{ secrets.DOCKER_USERNAME }}/ecom-microservices:latest
+            
+          # Health check
+          sleep 30
+          curl -f http://localhost:8080/api/health || exit 1
+        '

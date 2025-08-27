@@ -17,7 +17,7 @@ public class HealthController {
     public String checkHealth() {
         boolean isHealthy = databaseHealthService.isDatabaseHealthy();
         if (isHealthy) {
-            return "✅ PostgreSQL Database is UP and running!";
+            return "✅ - PostgreSQL Database is UP and running!!!";
         } else {
             return "❌ PostgreSQL Database is DOWN!";
         }
