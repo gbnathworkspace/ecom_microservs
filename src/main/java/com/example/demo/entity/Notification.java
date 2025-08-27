@@ -12,7 +12,7 @@ public class Notification {
     @GeneratedValue(strategy =  GenerationType.UUID)
     private UUID id;
 
-    @Id
+    @Column(name = "userId")
     private UUID userid;
 
     private String title;
