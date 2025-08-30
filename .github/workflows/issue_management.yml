@@ -1,0 +1,64 @@
+name: Issue Management
+
+on:
+  issues:
+    types: [opened, edited, labeled, unlabeled]
+  issue_comment:
+    types: [created]
+
+jobs:
+  manage_issues:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto-assign high priority issues
+        if: contains(github.event.issue.labels.*.name, 'high-priority')
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              assignees: ['${{ github.repository_owner }}']
+            });
+      
+      - name: Add to project board
+        if: github.event.action == 'opened'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const labels = context.payload.issue.labels.map(label => label.name);
+            let projectColumn = 'To Do';
+            
+            if (labels.includes('bug')) {
+              projectColumn = 'Bug Triage';
+            } else if (labels.includes('enhancement')) {
+              projectColumn = 'Backlog';
+            } else if (labels.includes('ci/cd')) {
+              projectColumn = 'DevOps';
+            }
+            
+            console.log(`Would add issue to ${projectColumn} column`);
+      
+      - name: Welcome first-time contributors
+        if: github.event.action == 'opened'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const isFirstIssue = context.payload.issue.number <= 5;
+            if (isFirstIssue) {
+              github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: `👋 Thanks for opening your first issue! We'll review it soon.
+                
+                Please make sure you've provided all the necessary information and followed our issue template.
+                
+                If this is a bug report, please include:
+                - Steps to reproduce
+                - Expected vs actual behavior
+                - Environment details
+                - Error logs (if applicable)`
+              });
+            }
