@@ -27,8 +27,18 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
-        System.out.println("JWT Filter executing for: " + request.getRequestURI());
-        return path.startsWith("/auth/") || path.equals("/dbhealth");
+        boolean shouldSkip = path.startsWith("/auth/")
+                || path.equals("/dbhealth")
+                || path.startsWith("/swagger-ui/")
+                || path.startsWith("/v3/api-docs")
+                || path.equals("/swagger-ui.html")
+                || path.startsWith("/webjars/")
+                || path.startsWith("/swagger-resources/");
+        
+        if (!shouldSkip) {
+            System.out.println("JWT Filter executing for: " + path);
+        }
+        return shouldSkip;
     }
 
     @Override
