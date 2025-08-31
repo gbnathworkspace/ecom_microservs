@@ -1,8 +1,13 @@
 package com.example.demo.dto.response;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+@Data
+@NoArgsConstructor
 public class NotificationResponse {
     private UUID id;
     private UUID userId;

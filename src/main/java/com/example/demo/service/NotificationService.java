@@ -19,12 +19,14 @@ public class NotificationService {
         this.notificationRepository = notificationRepository;
     }
 
-    public Notification createNotification(String title, String message, String email)
+    public Notification createNotification(UUID userid, String title, String message, String email)
     {
         Notification notification = Notification.builder()
+                .userid(userid)
                 .title(title)
                 .message(message)
                 .recipientEmail(email)
+                .status(Notification.NotificationStatus.PENDING)
                 .build();
 
         notificationRepository.save(notification);
@@ -34,8 +36,16 @@ public class NotificationService {
     public boolean sendNotification(UUID uuid)
     {
         Notification notification = notificationRepository.getReferenceById(uuid);
-        emailService.sendNotificationMail(notification);
-        return true;
+        boolean sent = emailService.sendNotificationMail(notification);
+        if(sent)
+        {
+            notification.setStatus(Notification.NotificationStatus.SENT);
+        }
+        else{
+            notification.setStatus(Notification.NotificationStatus.FAILED);
+        }
+        notificationRepository.save(notification);
+        return sent;
     }
 
     public List<Notification> getNotificationByUser(UUID userId)
@@ -43,7 +53,7 @@ public class NotificationService {
         return notificationRepository.findByUserid(userId);
     }
 
-    public void markAsRead(UUID notificationId)
+    public Notification markAsRead(UUID notificationId)
     {
         Optional<Notification> notification = notificationRepository.findById(notificationId);
         notification.ifPresent(
@@ -52,6 +62,7 @@ public class NotificationService {
                 notificationRepository.save(value);
             }
         );
+        return notification.orElse(null);
     }
 
     public List<Notification> getAllNotification()
