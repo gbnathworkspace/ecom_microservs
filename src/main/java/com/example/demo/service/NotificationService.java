@@ -50,7 +50,7 @@ public class NotificationService {
 
     public List<Notification> getNotificationByUser(UUID userId)
     {
-        return notificationRepository.findByUserid(userId);
+        return notificationRepository.findByUserid(userId); //test
     }
 
     public Notification markAsRead(UUID notificationId)
