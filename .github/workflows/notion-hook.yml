@@ -4,9 +4,26 @@ jobs:
   notion_hook:
     runs-on: ubuntu-latest
     steps:
-      - name: Sync commit to Notion
-        id: notion
-        uses: alessandrobelli/NotionHook@1.0
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          notion_secret: ${{ secrets.NOTION_SECRET }}
-          notion_database: ${{ secrets.NOTION_DATABASE }}
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: npm install @notionhq/client
+        
+      - name: Get commit message
+        id: commit
+        run: echo "message=$(git log --format=%B -n 1 ${{ github.sha }})" >> $GITHUB_OUTPUT
+        
+      - name: Sync commit to Notion
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_SECRET }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE }}
+          GITHUB_SHA: ${{ github.sha }}
+          COMMIT_MESSAGE: ${{ steps.commit.outputs.message }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: node .github/scripts/notion-sync.js
