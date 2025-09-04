@@ -1,0 +1,12 @@
+on: [push]
+
+jobs:
+  notion_hook:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sync commit to Notion
+        id: notion
+        uses: alessandrobelli/NotionHook@1.0
+        with:
+          notion_secret: ${{ secrets.NOTION_SECRET }}
+          notion_database: ${{ secrets.NOTION_DATABASE }}
