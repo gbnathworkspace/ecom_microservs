@@ -17,7 +17,7 @@ async function syncCommitToNotion() {
       },
       properties: {
         'Name': {
-          title: [
+          rich_text: [
             {
               text: {
                 content: commitMessage || 'No commit message'
