@@ -16,7 +16,7 @@ async function syncCommitToNotion() {
         database_id: process.env.NOTION_DATABASE_ID,
       },
       properties: {
-        'Commit': {
+        'Name': {
           title: [
             {
               text: {
@@ -25,7 +25,16 @@ async function syncCommitToNotion() {
             }
           ]
         },
-        'SHA': {
+        'Commit': {
+          rich_text: [
+            {
+              text: {
+                content: commitMessage || 'No commit message'
+              }
+            }
+          ]
+        },
+        'Id': {
           rich_text: [
             {
               text: {
@@ -34,22 +43,17 @@ async function syncCommitToNotion() {
             }
           ]
         },
-        'URL': {
+        'Url': {
           url: commitUrl
         },
-        'Repository': {
+        'description': {
           rich_text: [
             {
               text: {
-                content: repoName
+                content: `Commit from ${repoName}`
               }
             }
           ]
-        },
-        'Date': {
-          date: {
-            start: new Date().toISOString()
-          }
         }
       }
     });
