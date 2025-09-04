@@ -27,3 +27,4 @@ jobs:
           COMMIT_MESSAGE: ${{ steps.commit.outputs.message }}
           GITHUB_REPOSITORY: ${{ github.repository }}
         run: node .github/scripts/notion-sync.js
+
