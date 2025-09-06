@@ -1,9 +1,9 @@
-package com.example.demo.service;
+package com.example.auth.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.example.demo.entity.Email;
-import com.example.demo.entity.Notification;
+import com.example.auth.entity.Email;
+import com.example.auth.entity.Notification;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;

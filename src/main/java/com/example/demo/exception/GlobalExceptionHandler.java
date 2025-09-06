@@ -1,6 +1,6 @@
-package com.example.demo.exception;
+package com.example.auth.exception;
 
-import com.example.demo.dto.response.ErrorResponse;
+import com.example.auth.dto.response.ErrorResponse;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

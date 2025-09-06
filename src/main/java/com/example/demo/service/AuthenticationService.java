@@ -1,15 +1,15 @@
-package com.example.demo.service;
+package com.example.auth.service;
 
-import com.example.demo.Utils.JWTUtil;
-import com.example.demo.dto.request.LoginRequest;
-import com.example.demo.dto.request.RegisterRequest;
-import com.example.demo.dto.response.AuthResponse;
-import com.example.demo.dto.response.UserResponse;
-import com.example.demo.entity.User;
-import com.example.demo.exception.InvalidCredentialsException;
-import com.example.demo.exception.UserAlreadyExistsException;
-import com.example.demo.exception.UserNotFoundException;
-import com.example.demo.repository.UserRepository;
+import com.example.auth.Utils.JWTUtil;
+import com.example.auth.dto.request.LoginRequest;
+import com.example.auth.dto.request.RegisterRequest;
+import com.example.auth.dto.response.AuthResponse;
+import com.example.auth.dto.response.UserResponse;
+import com.example.auth.entity.User;
+import com.example.auth.exception.InvalidCredentialsException;
+import com.example.auth.exception.UserAlreadyExistsException;
+import com.example.auth.exception.UserNotFoundException;
+import com.example.auth.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;

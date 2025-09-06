@@ -1,9 +1,9 @@
-package com.example.demo.controller;
+package com.example.auth.controller;
 
-import com.example.demo.dto.request.NotificationRequest;
-import com.example.demo.dto.response.NotificationResponse;
-import com.example.demo.entity.Notification;
-import com.example.demo.service.NotificationService;
+import com.example.auth.dto.request.NotificationRequest;
+import com.example.auth.dto.response.NotificationResponse;
+import com.example.auth.entity.Notification;
+import com.example.auth.service.NotificationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

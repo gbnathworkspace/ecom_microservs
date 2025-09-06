@@ -1,7 +1,7 @@
-package com.example.demo.service;
+package com.example.auth.service;
 
-import com.example.demo.entity.Notification;
-import com.example.demo.repository.NotificationRepository;
+import com.example.auth.entity.Notification;
+import com.example.auth.repository.NotificationRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
