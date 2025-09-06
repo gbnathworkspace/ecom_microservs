@@ -18,14 +18,9 @@ COPY api-gateway/pom.xml ./api-gateway/
 # Download dependencies for all modules
 RUN mvn dependency:go-offline -B
 
-# Copy all source code
+# Copy only existing source code directories
 COPY user-service/src ./user-service/src
-COPY product-service/src ./product-service/src
-COPY order-service/src ./order-service/src
-COPY inventory-service/src ./inventory-service/src
-COPY payment-service/src ./payment-service/src
 COPY notification-service/src ./notification-service/src
-COPY api-gateway/src ./api-gateway/src
 
 # Build all modules
 RUN mvn clean package -DskipTests
@@ -35,8 +30,8 @@ FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
-# Copy the built JAR from api-gateway (main entry point)
-COPY --from=0 /app/api-gateway/target/*.jar app.jar
+# Copy the built JAR from user-service (main entry point for now)
+COPY --from=0 /app/user-service/target/*.jar app.jar
 
 # Expose port
 EXPOSE 8080
