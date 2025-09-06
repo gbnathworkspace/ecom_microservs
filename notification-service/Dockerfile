@@ -1,22 +1,12 @@
 FROM maven:3.8.6-eclipse-temurin-17-alpine AS builder
 
-# Set working directory
-WORKDIR /app
+WORKDIR /build
 
-# Copy parent pom.xml first
-COPY ../pom.xml ./parent-pom.xml
+# Copy the entire project context (this Dockerfile should be built from root)
+COPY . .
 
-# Copy this service's pom.xml
-COPY pom.xml .
-
-# Download dependencies
-RUN mvn dependency:go-offline -B -f pom.xml
-
-# Copy source code
-COPY src ./src
-
-# Build the service
-RUN mvn clean package -DskipTests
+# Build only this specific service
+RUN mvn clean package -DskipTests -pl notification-service -am
 
 # Use smaller runtime image
 FROM eclipse-temurin:17-jre-alpine
@@ -24,7 +14,7 @@ FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
 # Copy the built JAR
-COPY --from=builder /app/target/*.jar notification-service.jar
+COPY --from=builder /build/notification-service/target/*.jar notification-service.jar
 
 # Create non-root user for security
 RUN addgroup -g 1001 -S appgroup && \
