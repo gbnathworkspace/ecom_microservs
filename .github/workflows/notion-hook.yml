@@ -1,3 +1,4 @@
+name: notion log
 on: [push]
 
 jobs:
