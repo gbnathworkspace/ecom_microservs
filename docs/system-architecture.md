@@ -36,7 +36,7 @@ Internet
 - Profile management
 - Uses: PostgreSQL + Redis for sessions
 
-**Product Service** (Port 8082)  
+**Product Service** (Port 8083)  
 - Product catalog CRUD
 - Category management
 - Search functionality
@@ -60,7 +60,7 @@ Internet
 - Transaction records
 - Uses: PostgreSQL
 
-**Notification Service** (Port 8086)
+**Notification Service** (Port 8082)
 - Email notifications
 - SMS alerts  
 - Push notifications
