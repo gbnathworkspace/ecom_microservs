@@ -12,7 +12,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.UUID)
     UUID id;
 
-    String Name;
+    String name;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Product> productList = new ArrayList<>();

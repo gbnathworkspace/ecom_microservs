@@ -14,11 +14,16 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID )
-    UUID Id;
-    String Name;
+    UUID id;
+
+    String name;
+
     BigDecimal price;
+
     LocalDateTime createAt;
+
     String categoryId;
+
     String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
