@@ -224,10 +224,10 @@ jobs:
           docker pull ${{ secrets.DOCKER_USERNAME }}/notification-service:latest
           
           # Stop existing services
-          docker-compose -f docker-compose.prod.yml down || true
-          
+          docker compose -f docker-compose.prod.yml down || true
+
           # Start all services
-          docker-compose -f docker-compose.prod.yml up -d
+          docker compose -f docker-compose.prod.yml up -d
           
           # Wait for services to start
           sleep 60
