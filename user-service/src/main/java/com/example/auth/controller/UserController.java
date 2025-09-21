@@ -1,5 +1,10 @@
 package com.example.auth.controller;
 
+import com.example.auth.dto.response.UserResponse;
+import com.example.auth.dto.response.UserResponseList;
+import com.example.auth.entity.User;
+import com.example.auth.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +17,13 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    private final UserService userService;
+
+    public UserController(UserService userService)
+    {
+
+        this.userService = userService;
+    }
 
     @GetMapping("/profile")
     public Map<String, Object> getUserProfile() {
@@ -23,6 +35,14 @@ public class UserController {
         response.put("authorities", auth.getAuthorities());
         
         return response;
+    }
+
+    @GetMapping("/getallusers")
+    public ResponseEntity<UserResponseList> getAllUsers()
+    {
+        UserResponseList userResponseList = userService.getAllUsers();
+        return ResponseEntity.ok(userResponseList);
+
     }
 
     @GetMapping("/dashboard")
