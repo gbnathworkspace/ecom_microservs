@@ -15,8 +15,8 @@
     <!-- MODULE IDENTITY: Only artifactId needed, inherits groupId/version from parent -->
     <artifactId>product-service</artifactId>
     <packaging>jar</packaging> <!-- Creates executable JAR -->
-    <name>Product Service</name>
-    <description>Product and Category service</description>
+    <name>ProductController Service</name>
+    <description>ProductController and Category service</description>
 
     <dependencies>
     <dependency>
