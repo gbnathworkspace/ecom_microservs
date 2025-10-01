@@ -2,6 +2,7 @@ package com.example.products.controller;
 
 import com.example.products.dto.request.ProductRequest;
 import com.example.products.dto.response.ProductResponse;
+import com.example.products.entity.Category;
 import com.example.products.entity.Product;
 import com.example.products.repository.ProductRepository;
 import com.example.products.service.ProductService;
@@ -30,9 +31,9 @@ public class ProductController {
         List<Product> products = productService.GetAllProduct();
         for (Product product : products) {
             ProductResponse response = new ProductResponse();
-            response.setName(product.getName()); // assuming getName() exists
-            response.setPrice(product.getPrice().toString()); // add other fields as needed
-            response.setDescription(product.getDescription()); // example
+            response.setName(product.getName());
+            response.setPrice(product.getPrice().toString());
+            response.setDescription(product.getDescription());
             productResponses.add(response);
         }
 
@@ -40,14 +41,30 @@ public class ProductController {
     }
 
     @GetMapping("/get")
-    public ResponseEntity<ProductResponse> GetProducts(@RequestParam(name="user")String userId)
+    public ResponseEntity<List<ProductResponse>> GetProducts(@RequestParam(name="user")String userId)
     {
-        return ResponseEntity.ok(new ProductResponse());
-    }
+        List<ProductResponse> productResponses =  new ArrayList<>();
+        List<Product> products = productService.GetAllProduct(userId);
+        for (Product product : products) {
+            ProductResponse response = new ProductResponse();
+            response.setName(product.getName());
+            response.setPrice(product.getPrice().toString());
+            response.setDescription(product.getDescription());
+            productResponses.add(response);
+        }
+
+        return ResponseEntity.ok(productResponses);    }
 
     @PostMapping("/add")
     public ResponseEntity<ProductResponse> AddProduct(@RequestBody ProductRequest productRequest)
     {
+        Product product = new Product();
+        product.setId(UUID.randomUUID());
+        product.setCategory(productRequest.category);
+        product.setUserId(productRequest.userId);
+        product.setDescription(product.getDescription());
+
+        productService.AddProduct(product);
         return ResponseEntity.ok(new ProductResponse());
     }
 
@@ -55,6 +72,7 @@ public class ProductController {
     @PostMapping("/delete")
     public ResponseEntity<ProductResponse> DeleteProduct(@RequestParam(name = "pid")String productId)
     {
+        productService.DeleteProduct(UUID.fromString(productId));
         return ResponseEntity.ok(new ProductResponse());
     }
 
