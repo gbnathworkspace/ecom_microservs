@@ -2,11 +2,8 @@ package com.example.products.controller;
 
 import com.example.products.dto.request.ProductRequest;
 import com.example.products.dto.response.ProductResponse;
-import com.example.products.entity.Category;
 import com.example.products.entity.Product;
-import com.example.products.repository.ProductRepository;
 import com.example.products.service.ProductService;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,12 +12,10 @@ import java.util.*;
 @RestController
 @RequestMapping("/product")
 public class ProductController {
-    private final ProductRepository productRepository;
     private final ProductService productService;
 
-    ProductController(ProductRepository productRepository, ProductService productService)
+    ProductController(ProductService productService)
     {
-        this.productRepository = productRepository;
         this.productService = productService;
     }
 
@@ -40,7 +35,7 @@ public class ProductController {
         return ResponseEntity.ok(productResponses);
     }
 
-    @GetMapping("/get")
+    @GetMapping("/get/{userid}")
     public ResponseEntity<List<ProductResponse>> GetProducts(@RequestParam(name="user")String userId)
     {
         List<ProductResponse> productResponses =  new ArrayList<>();

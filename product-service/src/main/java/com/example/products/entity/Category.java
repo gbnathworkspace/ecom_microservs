@@ -1,5 +1,6 @@
 package com.example.products.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import java.util.UUID;
 
 @Data
 @Entity
+@JsonIgnoreProperties({"productList"})
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
