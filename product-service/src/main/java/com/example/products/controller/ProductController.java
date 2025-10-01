@@ -7,6 +7,8 @@ import com.example.products.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
@@ -57,7 +59,10 @@ public class ProductController {
         product.setId(UUID.randomUUID());
         product.setCategory(productRequest.category);
         product.setUserId(productRequest.userId);
-        product.setDescription(product.getDescription());
+        product.setDescription(productRequest.description);
+        product.setName(productRequest.name);
+        product.setPrice(new BigDecimal(productRequest.price));
+        product.setCreateAt(LocalDateTime.now());
 
         productService.AddProduct(product);
         return ResponseEntity.ok(new ProductResponse());
