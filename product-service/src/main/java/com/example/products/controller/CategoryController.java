@@ -47,7 +47,7 @@ public class CategoryController {
     {
         Category category = new Category();
         category.setId(UUID.randomUUID());
-        category.setName(categoryRequest.name);
+        category.setName(categoryRequest.name);//rest
 
 
         categoryService.AddCategory(category);
