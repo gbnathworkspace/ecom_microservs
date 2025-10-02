@@ -157,6 +157,11 @@ jobs:
                 - postgres
               networks:
                 - ecom-network
+              deploy:
+                resources:
+                  limits:
+                    cpus: '0.5'
+                    memory: 512M
                 
             notification-service:
               image: ${{ secrets.DOCKER_USERNAME }}/notification-service:latest
@@ -172,6 +177,11 @@ jobs:
                 - postgres
               networks:
                 - ecom-network
+              deploy:
+                resources:
+                  limits:
+                    cpus: '0.5'
+                    memory: 512M
           
             product-service:
               image: ${{ secrets.DOCKER_USERNAME }}/product-service:latest
@@ -187,6 +197,11 @@ jobs:
                 - postgres
               networks:
                 - ecom-network
+              deploy:
+                resources:
+                  limits:
+                    cpus: '0.5'
+                    memory: 512M
                 
             nginx:
               image: nginx:alpine
@@ -201,6 +216,11 @@ jobs:
                 - product-service
               networks:
                 - ecom-network
+              deploy:
+                resources:
+                  limits:
+                    cpus: '0.5'
+                    memory: 512M
                 
           volumes:
             postgres_data:
@@ -256,11 +276,35 @@ jobs:
           docker pull ${{ secrets.DOCKER_USERNAME }}/notification-service:latest
           docker pull ${{ secrets.DOCKER_USERNAME }}/product-service:latest
 
-          # Stop existing services
-          docker-compose -f docker-compose.prod.yml down || true
-
-          # Start all services
-          docker-compose -f docker-compose.prod.yml up -d
+          # Rolling deployment - restart one service at a time
+          echo "Starting rolling deployment..."
+        
+          # Pull and restart postgres first
+          docker-compose -f docker-compose.prod.yml up -d postgres
+          sleep 20
+          echo "Postgres restarted"
+        
+          # Restart user-service
+          docker-compose -f docker-compose.prod.yml pull user-service
+          docker-compose -f docker-compose.prod.yml up -d --no-deps user-service
+          sleep 15
+          echo "User service restarted"
+        
+          # Restart notification-service
+          docker-compose -f docker-compose.prod.yml pull notification-service
+          docker-compose -f docker-compose.prod.yml up -d --no-deps notification-service
+          sleep 15
+          echo "Notification service restarted"
+        
+          # Restart product-service
+          docker-compose -f docker-compose.prod.yml pull product-service
+          docker-compose -f docker-compose.prod.yml up -d --no-deps product-service
+          sleep 15
+          echo "Product service restarted"
+        
+          # Restart nginx last
+          docker-compose -f docker-compose.prod.yml up -d --no-deps nginx
+          echo "Rolling deployment complete"
           
           # Wait for services to start
           sleep 60
