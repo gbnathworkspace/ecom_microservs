@@ -106,6 +106,7 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/${{ matrix.service }}:latest
 
 
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -222,7 +223,7 @@ jobs:
                   server notification-service:8082;
               }
               upstream product_service {
-                  server product-service:8082;
+                  server product-service:8083;
               }
               server {
                   listen 80;
