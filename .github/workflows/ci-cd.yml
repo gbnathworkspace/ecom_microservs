@@ -142,6 +142,11 @@ jobs:
                 - postgres_data:/var/lib/postgresql/data
               networks:
                 - ecom-network
+              deploy:
+                resources:
+                  limits:
+                    cpus: '0.5'
+                    memory: 192M
                 
             user-service:
               image: ${{ secrets.DOCKER_USERNAME }}/user-service:latest
@@ -161,8 +166,8 @@ jobs:
                 resources:
                   limits:
                     cpus: '0.5'
-                    memory: 512M
-                
+                    memory: 192M
+
             notification-service:
               image: ${{ secrets.DOCKER_USERNAME }}/notification-service:latest
               container_name: ecom-notification-service
@@ -181,8 +186,8 @@ jobs:
                 resources:
                   limits:
                     cpus: '0.5'
-                    memory: 512M
-          
+                    memory: 192M
+
             product-service:
               image: ${{ secrets.DOCKER_USERNAME }}/product-service:latest
               container_name: ecom-product-service
@@ -201,8 +206,8 @@ jobs:
                 resources:
                   limits:
                     cpus: '0.5'
-                    memory: 512M
-                
+                    memory: 192M
+
             nginx:
               image: nginx:alpine
               container_name: ecom-load-balancer
@@ -220,7 +225,7 @@ jobs:
                 resources:
                   limits:
                     cpus: '0.5'
-                    memory: 512M
+                    memory: 64M
                 
           volumes:
             postgres_data:
