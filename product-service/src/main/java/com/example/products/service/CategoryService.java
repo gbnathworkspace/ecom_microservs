@@ -6,6 +6,7 @@ import com.example.products.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,14 +23,18 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
-    public void AddCategory(Category category)
+    public Category AddCategory(Category category)
     {
-        categoryRepository.save(category);
+        return categoryRepository.save(category);
     }
 
     public void DeleteProduct(UUID categoryId)
     {
         categoryRepository.deleteById(categoryId);
+    }
+
+    public Optional<Category> GetCategory(UUID categoryId) {
+        return categoryRepository.findById(categoryId);
     }
 
     public void UpdateProduct(Category category)

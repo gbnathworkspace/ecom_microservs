@@ -22,12 +22,10 @@ public class Product {
 
     LocalDateTime createAt;
 
-    String categoryId;
-
     String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category")
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @Column(name = "userid")

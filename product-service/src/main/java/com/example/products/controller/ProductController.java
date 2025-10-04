@@ -2,7 +2,9 @@ package com.example.products.controller;
 
 import com.example.products.dto.request.ProductRequest;
 import com.example.products.dto.response.ProductResponse;
+import com.example.products.entity.Category;
 import com.example.products.entity.Product;
+import com.example.products.service.CategoryService;
 import com.example.products.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +17,12 @@ import java.util.*;
 @RequestMapping("/product")
 public class ProductController {
     private final ProductService productService;
+    private final CategoryService categoryService;
 
-    ProductController(ProductService productService)
+    ProductController(ProductService productService, CategoryService categoryService)
     {
         this.productService = productService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/get")
@@ -55,6 +59,12 @@ public class ProductController {
     @PostMapping("/add")
     public ResponseEntity<ProductResponse> AddProduct(@RequestBody ProductRequest productRequest)
     {
+        Optional<Category> category = categoryService.GetCategory(productRequest.category.getId());
+        if(category.isEmpty())
+        {
+            categoryService.AddCategory(productRequest.category);
+        }
+
         Product product = new Product();
         product.setId(UUID.randomUUID());
         product.setCategory(productRequest.category);

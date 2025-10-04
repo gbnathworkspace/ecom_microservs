@@ -33,9 +33,7 @@ public class CategoryController {
         List<CategoryResponse> categoryResponses =  new ArrayList<>();
         List<Category> categories = categoryService.GetAllCategory();
         for (Category category : categories) {
-            CategoryResponse response = new CategoryResponse();
-            response.setName(category.getName());
-            response.setId(category.getId().toString());
+            CategoryResponse response = new CategoryResponse(category.getName(), category.getId().toString());
             categoryResponses.add(response);
         }
 
@@ -46,12 +44,15 @@ public class CategoryController {
     public ResponseEntity<CategoryResponse> AddCategory(@RequestBody CategorytRequest categoryRequest)
     {
         Category category = new Category();
-        category.setId(UUID.randomUUID());
+        UUID id = UUID.randomUUID();
+        category.setId(id);
         category.setName(categoryRequest.name);//rest
 
+        Category savedCategory = categoryService.AddCategory(category);
 
-        categoryService.AddCategory(category);
-        return ResponseEntity.ok(new CategoryResponse());
+        CategoryResponse categoryResponse = new CategoryResponse(savedCategory.getName(), savedCategory.getId().toString()){};
+
+        return ResponseEntity.ok(categoryResponse);
     }
 
 
