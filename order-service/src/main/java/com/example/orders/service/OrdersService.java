@@ -1,42 +1,44 @@
 package com.example.orders.service;
 
 import com.example.orders.entity.Order;
+import com.example.orders.entity.OrderItem;
 import com.example.orders.repository.OrdersRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
 @Service
 public class OrdersService {
-    private final OrdersRepository productRepository;
+    private final OrdersRepository ordersRepository;
 
-    OrdersService(OrdersRepository productRepository)
+    OrdersService(OrdersRepository ordersRepository)
     {
-        this.productRepository = productRepository;
+        this.ordersRepository = ordersRepository;
     }
 
-    public List<Order> GetAllProduct()
+    public List<Order> GetAllOrder(String userId)
     {
-        return productRepository.findAll();
+        return ordersRepository.findByUserId(userId);
     }
 
-    public List<Order> GetAllProduct(String userId)
+    public List<Order> GetOrder(String orderId)
     {
-        return productRepository.findByUserId(userId);
+        return ordersRepository.findAllById(Collections.singleton(UUID.fromString(orderId)));
     }
 
-    public void AddProduct(Order product)
+    public void AddOrder(Order order)
     {
-        productRepository.save(product);
+        ordersRepository.save(order);
     }
 
-    public void DeleteProduct(UUID productId)
+    public void DeleteOrder(UUID productId)
     {
-        productRepository.deleteById(productId);
+        ordersRepository.deleteById(productId);
     }
 
-    public void UpdateProduct(Order product)
+    public void UpdateOrder(Order product)
     {
     }
 }

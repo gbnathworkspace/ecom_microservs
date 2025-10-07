@@ -12,6 +12,7 @@ import java.util.UUID;
 @Entity
 @Table
 public class Order {
+    @Id
     public UUID orderId;
     public BigDecimal totalPrice;
     public LocalDateTime createdAt;

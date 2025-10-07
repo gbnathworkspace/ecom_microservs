@@ -1,9 +1,6 @@
 package com.example.orders.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.UUID;
@@ -12,6 +9,7 @@ import java.util.UUID;
 @Table
 public class OrderItem
 {
+    @Id
     public UUID Id;
     public UUID productId;
     public String productName;
