@@ -1,7 +1,6 @@
 package com.example.orders.service;
 
 import com.example.orders.entity.Order;
-import com.example.orders.entity.OrderItem;
 import com.example.orders.repository.OrdersRepository;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +9,10 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class OrdersService {
+public class OrderService {
     private final OrdersRepository ordersRepository;
 
-    OrdersService(OrdersRepository ordersRepository)
+    OrderService(OrdersRepository ordersRepository)
     {
         this.ordersRepository = ordersRepository;
     }
