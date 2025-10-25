@@ -5,7 +5,6 @@ A production-ready, scalable e-commerce platform built with Java 17 + Spring Boo
 ## 🏗️ Architecture
 
 - **6 Core Microservices**: User, Product, Order, Inventory, Payment, Notification
-- **Event-Driven**: Apache Kafka for async communication
 - **API Gateway**: Spring Cloud Gateway for routing & authentication  
 - **Polyglot Persistence**: PostgreSQL + Redis + Elasticsearch
 - **Containerized**: Docker + Kubernetes deployment
@@ -14,7 +13,7 @@ A production-ready, scalable e-commerce platform built with Java 17 + Spring Boo
 
 ```bash
 # Clone repository
-git clone <your-repo-url>
+git clone https://github.com/gbnathworkspace/ecom_microservs.git
 cd ecom_microservs
 
 # Run with Docker Compose
@@ -39,11 +38,10 @@ docker-compose up -d
 
 - **Backend**: Java 17, Spring Boot 3.x, Spring Security
 - **Database**: PostgreSQL (primary), Redis (cache), Elasticsearch (search)
-- **Messaging**: Apache Kafka
-- **Gateway**: Spring Cloud Gateway
-- **Discovery**: Eureka Server
-- **Monitoring**: Prometheus + Grafana + Zipkin
-- **Deployment**: Docker, Kubernetes
+- **Gateway**: Spring Cloud Gateway  gateway really are we using any gateway
+- **Discovery**: Eureka Server  //wtf is this
+- **Monitoring**: Prometheus + Grafana + Zipkin //is this true??
+- **Deployment**: Docker, Github Actions, EC2.
 
 ## 📋 Features
 
@@ -100,16 +98,10 @@ docker build -t ecom-user-service .
 docker-compose up -d
 ```
 
-## 📈 Monitoring
-
-- **Metrics**: http://localhost:9090 (Prometheus)
-- **Dashboards**: http://localhost:3000 (Grafana)  
-- **Tracing**: http://localhost:9411 (Zipkin)
-
 ## 🔒 Security
 
 - JWT-based stateless authentication
-- BCrypt password hashing
+- BCrypt password hashing  //doubt this
 - Input validation & sanitization
 - CORS configuration
 - Rate limiting (planned)
@@ -131,7 +123,7 @@ docker-compose up -d
 
 - [System Architecture](docs/system-architecture.md)
 - [Resume Talking Points](docs/resume-talking-points.md)
-- [API Documentation](docs/api-docs.md) (coming soon)
+- [API Documentation](docs/api-docs.md) (coming soon)  //need to study to write a api documentation.
 
 ## 🤝 Contributing
 
