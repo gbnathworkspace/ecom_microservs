@@ -13,7 +13,7 @@ A production-ready, scalable e-commerce platform built with Java 17 + Spring Boo
 
 ```bash
 # Clone repository
-git clone <your-repo-url>
+git clone https://github.com/gbnathworkspace/ecom_microservs.git
 cd ecom_microservs
 
 # Run with Docker Compose
