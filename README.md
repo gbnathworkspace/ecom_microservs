@@ -5,7 +5,6 @@ A production-ready, scalable e-commerce platform built with Java 17 + Spring Boo
 ## 🏗️ Architecture
 
 - **6 Core Microservices**: User, Product, Order, Inventory, Payment, Notification
-- **Event-Driven**: Apache Kafka for async communication
 - **API Gateway**: Spring Cloud Gateway for routing & authentication  
 - **Polyglot Persistence**: PostgreSQL + Redis + Elasticsearch
 - **Containerized**: Docker + Kubernetes deployment
@@ -39,7 +38,6 @@ docker-compose up -d
 
 - **Backend**: Java 17, Spring Boot 3.x, Spring Security
 - **Database**: PostgreSQL (primary), Redis (cache), Elasticsearch (search)
-- **Messaging**: Apache Kafka
 - **Gateway**: Spring Cloud Gateway  gateway really are we using any gateway
 - **Discovery**: Eureka Server  //wtf is this
 - **Monitoring**: Prometheus + Grafana + Zipkin //is this true??
